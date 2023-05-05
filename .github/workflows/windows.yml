@@ -44,12 +44,11 @@ jobs:
     - name: Package
       run: |
         mkdir deploy
-        cp wobbly.exe wibbly.exe deploy
+        cp wobbly.exe deploy
         cp -r styles deploy
 
         export PATH=$PATH:vapoursynth/
         ldd wobbly.exe | grep -vi '/windows' | grep -v 'VSScript' | awk '{print $3}' | xargs -l1 cp -t deploy
-        ldd wibbly.exe | grep -vi '/windows' | grep -v 'VSScript' | awk '{print $3}' | xargs -l1 cp -t deploy
 
         cp -r $MSYSTEM_PREFIX/share/qt5/plugins/{platforms,styles} deploy
 

@@ -16,7 +16,7 @@ moc_verbose_0 = @echo "  MOC     " $@;
 moc_%.cpp : %.h
 	$(moc_verbose)$(MOC) -o "$@" "$<"
 
-bin_PROGRAMS = wibbly wobbly
+bin_PROGRAMS = wobbly
 
 shared_moc_files = src/shared/moc_BookmarksModel.cpp \
 				   src/shared/moc_CombedFramesModel.cpp \
@@ -32,8 +32,6 @@ shared_moc_files = src/shared/moc_BookmarksModel.cpp \
 				   src/shared/moc_SectionsModel.cpp \
 				   src/shared/moc_WobblyProject.cpp
 
-wibbly_moc_files = src/wibbly/moc_WibblyWindow.cpp
-
 wobbly_moc_files = src/wobbly/moc_CombedFramesCollector.cpp \
 				   src/wobbly/moc_FrameLabel.cpp \
 				   src/wobbly/moc_ImportWindow.cpp \
@@ -47,7 +45,6 @@ wobbly_moc_files = src/wobbly/moc_CombedFramesCollector.cpp \
 
 
 MOSTLYCLEANFILES = $(shared_moc_files) \
-				   $(wibbly_moc_files) \
 				   $(wobbly_moc_files)
 
 rapidjson_sources = rapidjson/allocators.h \
@@ -138,15 +135,6 @@ wobbly_SOURCES = $(shared_sources) \
 				 src/wobbly/WobblyWindow.h \
 				 $(shared_moc_files) \
 				 $(wobbly_moc_files)
-
-wibbly_SOURCES = $(shared_sources) \
-				 src/wibbly/Wibbly.cpp \
-				 src/wibbly/WibblyJob.cpp \
-				 src/wibbly/WibblyJob.h \
-				 src/wibbly/WibblyWindow.cpp \
-				 src/wibbly/WibblyWindow.h \
-				 $(shared_moc_files) \
-				 $(wibbly_moc_files)
 
 
 LDADD = $(QT5PLATFORMPLUGIN) $(QT5PLATFORMSUPPORT_LIBS) $(QT5WIDGETS_LIBS) $(VSSCRIPT_LIBS)
