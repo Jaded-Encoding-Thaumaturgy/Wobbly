@@ -9,6 +9,8 @@ on:
       - 'configure.ac'
       - 'Makefile.am'
       - '.github/workflows/windows.yml'
+  workflow_dispatch:
+    
 
 jobs:
   build-windows:
