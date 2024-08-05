@@ -320,6 +320,8 @@ private:
     void keyPressEvent(QKeyEvent *event);
     void wheelEvent(QWheelEvent *event);
 
+    const char *getArgsForSourceFilter(const QString &source_filter);
+
     void realOpenProject(const QString &path);
     void realOpenVideo(const QString &path);
     void realSaveProject(const QString &path);

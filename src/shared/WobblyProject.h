@@ -438,6 +438,7 @@ class WobblyProject : public QObject {
         void customListsToScript(std::string &script, PositionInFilterChain position) const;
         void headerToScript(std::string &script) const;
         void presetsToScript(std::string &script) const;
+        const char *getArgsForSourceFilter() const;
         void sourceToScript(std::string &script, bool save_node) const;
         void trimToScript(std::string &script) const;
         void fieldHintToScript(std::string &script) const;

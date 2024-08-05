@@ -67,6 +67,7 @@ class WibblyJob {
 
     double fades_threshold;
 
+    const char *getArgsForSourceFilter() const;
 
     void headerToScript(std::string &script) const;
     void sourceToScript(std::string &script) const;

@@ -4128,8 +4128,20 @@ void WobblyProject::presetsToScript(std::string &script) const {
 }
 
 
+const char *WobblyProject::getArgsForSourceFilter() const {
+    if (source_filter == "bs.VideoSource")
+        return ", rff=True";
+    return "";
+}
+
+
 void WobblyProject::sourceToScript(std::string &script, bool save_node) const {
-    std::string src = "src = c." + source_filter + "(r'" + handleSingleQuotes(input_file) + "')\n";
+    std::string src = std::format(
+        "src = c.{}(r'{}'{})\n",
+        source_filter,
+        handleSingleQuotes(input_file),
+        getArgsForSourceFilter()
+    );
 
     if (save_node) {
     script +=

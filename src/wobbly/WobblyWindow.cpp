@@ -3878,6 +3878,11 @@ void WobblyWindow::openProject() {
     }
 }
 
+const char *WobblyWindow::getArgsForSourceFilter(const QString &source_filter) {
+    if (source_filter == "bs.VideoSource")
+        return ", rff=True";
+    return "";
+}
 
 void WobblyWindow::realOpenVideo(const QString &path) {
     try {
@@ -3897,8 +3902,11 @@ void WobblyWindow::realOpenVideo(const QString &path) {
                     "\n"
                     "c = vs.core\n"
                     "\n"
-                    "c.%1(r'%2').set_output()\n");
-        script = script.arg(source_filter).arg(QString::fromStdString(handleSingleQuotes(path.toStdString())));
+                    "c.%1(r'%2'%3).set_output()\n");
+        script = script
+            .arg(source_filter)
+            .arg(QString::fromStdString(handleSingleQuotes(path.toStdString())))
+            .arg(getArgsForSourceFilter(source_filter));
 
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
