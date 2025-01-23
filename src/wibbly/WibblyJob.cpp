@@ -237,7 +237,7 @@ void WibblyJob::headerToScript(std::string &script) const {
 
 const char *WibblyJob::getArgsForSourceFilter() const {
     if (source_filter == "bs.VideoSource")
-        return ", rff=True";
+        return ", rff=True, showprogress=False";
     return "";
 }
 

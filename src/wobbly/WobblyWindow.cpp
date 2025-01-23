@@ -3880,7 +3880,7 @@ void WobblyWindow::openProject() {
 
 const char *WobblyWindow::getArgsForSourceFilter(const QString &source_filter) {
     if (source_filter == "bs.VideoSource")
-        return ", rff=True";
+        return ", rff=True, showprogress=False";
     return "";
 }
 

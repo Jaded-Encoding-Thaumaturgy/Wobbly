@@ -4130,7 +4130,7 @@ void WobblyProject::presetsToScript(std::string &script) const {
 
 const char *WobblyProject::getArgsForSourceFilter() const {
     if (source_filter == "bs.VideoSource")
-        return ", rff=True";
+        return ", rff=True, showprogress=False";
     return "";
 }
 
