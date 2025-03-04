@@ -525,8 +525,13 @@ void WobblyWindow::createShortcuts() {
         { "", "",                   "Set decimation pattern to range", &WobblyWindow::setDecimationPattern },
         { "", "",                   "Set match and decimation patterns to range", &WobblyWindow::setMatchAndDecimationPatterns },
         { "", "F5",                 "Toggle preview mode", &WobblyWindow::togglePreview },
+#ifdef __MACH__
+        { "", "Ctrl+=",         "Zoom in", &WobblyWindow::zoomIn },
+        { "", "Ctrl+-",         "Zoom out", &WobblyWindow::zoomOut },
+#else
         { "", "Ctrl+Num++",         "Zoom in", &WobblyWindow::zoomIn },
         { "", "Ctrl+Num+-",         "Zoom out", &WobblyWindow::zoomOut },
+#endif
         { "", "",                   "Guess current section's patterns from matches", &WobblyWindow::guessCurrentSectionPatternsFromMatches },
         { "", "",                   "Guess every section's patterns from matches", &WobblyWindow::guessProjectPatternsFromMatches },
         { "", "Ctrl+Alt+G",         "Guess current section's patterns from mics", &WobblyWindow::guessCurrentSectionPatternsFromMics },
