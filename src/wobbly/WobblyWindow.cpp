@@ -526,8 +526,8 @@ void WobblyWindow::createShortcuts() {
         { "", "",                   "Set match and decimation patterns to range", &WobblyWindow::setMatchAndDecimationPatterns },
         { "", "F5",                 "Toggle preview mode", &WobblyWindow::togglePreview },
 #ifdef __MACH__
-        { "", "Ctrl+=",         "Zoom in", &WobblyWindow::zoomIn },
-        { "", "Ctrl+-",         "Zoom out", &WobblyWindow::zoomOut },
+        { "", "Ctrl+=",             "Zoom in", &WobblyWindow::zoomIn },
+        { "", "Ctrl+-",             "Zoom out", &WobblyWindow::zoomOut },
 #else
         { "", "Ctrl+Num++",         "Zoom in", &WobblyWindow::zoomIn },
         { "", "Ctrl+Num+-",         "Zoom out", &WobblyWindow::zoomOut },
