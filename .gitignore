@@ -42,3 +42,7 @@ configure~
 wibbly.ini
 confdefs.h
 conftest.dir/
+
+.DS_Store
+wibbly
+wobbly
