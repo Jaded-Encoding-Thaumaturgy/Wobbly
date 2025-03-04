@@ -34,7 +34,7 @@ SOFTWARE.
 #define VSSCRIPT_SO "vsscript.dll"
 #else
 #ifdef __APPLE__
-#define VSSCRIPT_SO "/opt/homebrew/lib/libvapoursynth-script.dylib"
+#define VSSCRIPT_SO "libvapoursynth-script.dylib"
 #define DLOPEN_FLAGS RTLD_LAZY | RTLD_GLOBAL
 #else
 #define VSSCRIPT_SO "libvapoursynth-script.so"

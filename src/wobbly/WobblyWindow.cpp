@@ -157,6 +157,15 @@ void WobblyWindow::addRecentFile(const QString &path) {
     }
 }
 
+QString formatKeyForDisplay(const QString &key) {
+#ifdef __MACH__
+    QString displayKey = key;
+    displayKey.replace("Ctrl+", "Command+");
+    return displayKey;
+#else
+    return key;
+#endif
+}
 
 void WobblyWindow::readSettings() {
     if (settings.contains(KEY_STATE))
@@ -198,12 +207,12 @@ void WobblyWindow::readSettings() {
         if (settings.contains(settings_key))
             shortcuts[i].keys = settings.value(settings_key).toString();
 
-        QTableWidgetItem *item = new QTableWidgetItem(shortcuts[i].keys);
+        QTableWidgetItem *item = new QTableWidgetItem(formatKeyForDisplay(shortcuts[i].keys));
         settings_shortcuts_table->setItem(i, 0, item);
-
-        item = new QTableWidgetItem(shortcuts[i].default_keys);
+    
+        item = new QTableWidgetItem(formatKeyForDisplay(shortcuts[i].default_keys));
         settings_shortcuts_table->setItem(i, 1, item);
-
+    
         item = new QTableWidgetItem(shortcuts[i].description);
         settings_shortcuts_table->setItem(i, 2, item);
     }
@@ -283,10 +292,29 @@ void WobblyWindow::keyPressEvent(QKeyEvent *event) {
     auto mod = event->modifiers();
     int key = event->key();
 
-    // Shift+[ returns key() == Key_LeftBrace instead of Key_LeftBracket
+#ifdef __MACH__
+    
+    QKeySequence originalSequence(mod | key);
+    QString originalString = originalSequence.toString(QKeySequence::PortableText);
+
+    if (key == Qt::Key_Left || key == Qt::Key_Right || 
+        key == Qt::Key_Up || key == Qt::Key_Down || 
+        key == Qt::Key_Home || key == Qt::Key_End || 
+        key == Qt::Key_PageUp || key == Qt::Key_PageDown) {
+        
+        if (mod & Qt::ControlModifier || mod & Qt::AltModifier || mod & Qt::ShiftModifier) {
+            mod &= (Qt::ControlModifier | Qt::AltModifier | Qt::ShiftModifier);
+        } else {
+            mod = Qt::NoModifier;
+        }
+    } else if (key < Qt::Key_A || key > Qt::Key_Z) {
+        mod &= ~Qt::ShiftModifier;
+    }
+
+#else
     if ((key < Qt::Key_A || key > Qt::Key_Z) && key != Qt::Key_Up && key != Qt::Key_Down)
         mod &= ~Qt::ShiftModifier;
-
+#endif
     QKeySequence sequence(mod | key);
     QString sequence_string = sequence.toString(QKeySequence::PortableText);
     //fprintf(stderr, "Sequence: '%s'\n", sequence_string.toUtf8().constData());
@@ -483,7 +511,11 @@ void WobblyWindow::createShortcuts() {
         { "", "",                   "Toggle all freezeframes in the source tab", &WobblyWindow::toggleFreezeFrames },
         { "", "D",                  "Toggle decimation for the current frame", &WobblyWindow::toggleDecimation },
         { "", "I",                  "Start new section at current frame", &WobblyWindow::addSection },
+#ifdef __MACH__
+        { "", "Ctrl+Backspace",     "Delete current section", &WobblyWindow::deleteSection }, // ctrl + Q = quite app
+#else
         { "", "Ctrl+Q",             "Delete current section", &WobblyWindow::deleteSection },
+#endif        
         { "", "P",                  "Toggle postprocessing for the current frame or a range", &WobblyWindow::toggleCombed },
         { "", "B",                  "Toggle bookmark", &WobblyWindow::toggleBookmark },
         { "", "R",                  "Reset the match(es) for the current frame or a range", &WobblyWindow::resetMatch },
