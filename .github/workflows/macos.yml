@@ -1,0 +1,40 @@
+name: Macos-latest
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: install deps
+      run: |
+        brew install qt@5 autoconf automake libtool vapoursynth llvm
+
+    - name: build
+      run: |
+        export PKG_CONFIG_PATH="/opt/homebrew/opt/qt@5/lib/pkgconfig:$PKG_CONFIG_PATH"
+        export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
+        export CC=/opt/homebrew/opt/llvm/bin/clang
+        export CXX=/opt/homebrew/opt/llvm/bin/clang++
+        export PATH=/opt/homebrew/opt/llvm/bin:$PATH  
+        export CPATH=/usr/local/include:$CPATH
+        export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+
+        ./autogen.sh
+        ./configure
+        make -j
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        path: |
+          ./woobly
+          ./wibbly
