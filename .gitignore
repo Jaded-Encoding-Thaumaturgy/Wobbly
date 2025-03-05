@@ -46,3 +46,5 @@ conftest.dir/
 .DS_Store
 wibbly
 wobbly
+
+.vscode/*
