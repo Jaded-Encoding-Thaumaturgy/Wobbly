@@ -145,7 +145,6 @@ private:
 
     DockWidget *pg_dock;
     QSpinBox *pg_length_spin;
-    QSpinBox *pg_edge_cutoff;
     QButtonGroup *pg_methods_buttons;
     QButtonGroup *pg_n_match_buttons;
     QButtonGroup *pg_decimate_buttons;
