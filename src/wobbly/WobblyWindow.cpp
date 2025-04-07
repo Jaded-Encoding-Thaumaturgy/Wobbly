@@ -2149,13 +2149,6 @@ void WobblyWindow::createPatternGuessingWindow() {
     pg_length_spin->setValue(10);
     pg_length_spin->setToolTip(QStringLiteral("Sections shorter than this will be skipped."));
 
-    pg_edge_cutoff = new QSpinBox;
-    pg_edge_cutoff->setMaximum(3);
-    pg_edge_cutoff->setPrefix(QStringLiteral("Edge Cutoff: "));
-    pg_edge_cutoff->setSuffix(QStringLiteral(" frames"));
-    pg_edge_cutoff->setValue(1);
-    pg_edge_cutoff->setToolTip(QStringLiteral("Sections will be cut at the start and end by this amount of frames."));
-
     QGroupBox *pg_n_match_group = new QGroupBox(QStringLiteral("Use third N match"));
 
     const char *third_n_match[] = {
@@ -2305,7 +2298,6 @@ void WobblyWindow::createPatternGuessingWindow() {
 
     QVBoxLayout *pvbox = new QVBoxLayout;
     pvbox->addWidget(pg_length_spin);
-    pvbox->addWidget(pg_edge_cutoff);
 
     hbox->addLayout(pvbox);
 
@@ -3674,7 +3666,6 @@ void WobblyWindow::initialisePatternGuessingWindow() {
         pg_methods_buttons->button(pg.method)->setChecked(true);
 
         pg_length_spin->setValue(pg.minimum_length);
-        pg_edge_cutoff->setValue(pg.edge_cutoff);
 
         pg_n_match_buttons->button(pg.third_n_match)->setChecked(true);
 
@@ -5642,7 +5633,7 @@ void WobblyWindow::guessCurrentSectionPatternsFromMics() {
     bool success;
 
     try {
-        success = project->guessSectionPatternsFromMics(section_start, pg_length_spin->value(), pg_edge_cutoff->value(), use_patterns, pg_decimate_buttons->checkedId());
+        success = project->guessSectionPatternsFromMics(section_start, pg_length_spin->value(), use_patterns, pg_decimate_buttons->checkedId());
         commit("Guess section patterns from mics");
     } catch (WobblyException &e) {
         QApplication::restoreOverrideCursor();
@@ -5688,7 +5679,7 @@ void WobblyWindow::guessCurrentSectionPatternsFromDMetrics() {
     bool success;
 
     try {
-        success = project->guessSectionPatternsFromDMetrics(section_start, pg_length_spin->value(), pg_edge_cutoff->value(), use_patterns, pg_decimate_buttons->checkedId());
+        success = project->guessSectionPatternsFromDMetrics(section_start, pg_length_spin->value(), use_patterns, pg_decimate_buttons->checkedId());
         commit("Guess section patterns from dmetrics");
     } catch (WobblyException &e) {
         QApplication::restoreOverrideCursor();
@@ -5734,7 +5725,7 @@ void WobblyWindow::guessCurrentSectionPatternsFromMicsAndDMetrics() {
     bool success;
 
     try {
-        success = project->guessSectionPatternsFromMicsAndDMetrics(section_start, pg_length_spin->value(), pg_edge_cutoff->value(), use_patterns, pg_decimate_buttons->checkedId());
+        success = project->guessSectionPatternsFromMicsAndDMetrics(section_start, pg_length_spin->value(), use_patterns, pg_decimate_buttons->checkedId());
         commit("Guess section patterns from mics and dmetrics");
     } catch (WobblyException &e) {
         QApplication::restoreOverrideCursor();
@@ -5778,7 +5769,7 @@ void WobblyWindow::guessProjectPatternsFromMics() {
     try {
         project->clearOrphanFields();
 
-        project->guessProjectPatternsFromMics(pg_length_spin->value(), pg_edge_cutoff->value(), use_patterns, pg_decimate_buttons->checkedId());
+        project->guessProjectPatternsFromMics(pg_length_spin->value(), use_patterns, pg_decimate_buttons->checkedId());
         commit("Guess project patterns from mics");
 
         QApplication::restoreOverrideCursor();
@@ -5813,7 +5804,7 @@ void WobblyWindow::guessProjectPatternsFromDMetrics() {
     try {
         project->clearOrphanFields();
 
-        project->guessProjectPatternsFromDMetrics(pg_length_spin->value(), pg_edge_cutoff->value(), use_patterns, pg_decimate_buttons->checkedId());
+        project->guessProjectPatternsFromDMetrics(pg_length_spin->value(), use_patterns, pg_decimate_buttons->checkedId());
         commit("Guess section patterns from dmetrics");
 
         QApplication::restoreOverrideCursor();
@@ -5848,7 +5839,7 @@ void WobblyWindow::guessProjectPatternsFromMicsAndDMetrics() {
     try {
         project->clearOrphanFields();
 
-        project->guessProjectPatternsFromMicsAndDMetrics(pg_length_spin->value(), pg_edge_cutoff->value(), use_patterns, pg_decimate_buttons->checkedId());
+        project->guessProjectPatternsFromMicsAndDMetrics(pg_length_spin->value(), use_patterns, pg_decimate_buttons->checkedId());
         commit("Guess project patterns from mics and dmetrics");
 
         QApplication::restoreOverrideCursor();
@@ -5876,7 +5867,7 @@ void WobblyWindow::guessCurrentSectionPatternsFromMatches() {
 
     int section_start = project->findSection(current_frame)->start;
 
-    bool success = project->guessSectionPatternsFromMatches(section_start, pg_length_spin->value(), pg_edge_cutoff->value(), pg_n_match_buttons->checkedId(), pg_decimate_buttons->checkedId());
+    bool success = project->guessSectionPatternsFromMatches(section_start, pg_length_spin->value(), pg_n_match_buttons->checkedId(), pg_decimate_buttons->checkedId());
     commit("Guess section patterns from matches");
 
     updatePatternGuessingWindow();
@@ -5905,7 +5896,7 @@ void WobblyWindow::guessProjectPatternsFromMatches() {
 
     project->clearOrphanFields();
 
-    project->guessProjectPatternsFromMatches(pg_length_spin->value(), pg_edge_cutoff->value(), pg_n_match_buttons->checkedId(), pg_decimate_buttons->checkedId());
+    project->guessProjectPatternsFromMatches(pg_length_spin->value(), pg_n_match_buttons->checkedId(), pg_decimate_buttons->checkedId());
     commit("Guess project patterns from matches");
 
     updatePatternGuessingWindow();
