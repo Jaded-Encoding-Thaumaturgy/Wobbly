@@ -5449,20 +5449,26 @@ void WobblyWindow::rotateAndSetPatterns() {
     if (!project)
         return;
 
-    int size = match_pattern.size();
-    match_pattern.prepend(match_pattern[size - 1]);
-    match_pattern.truncate(size);
-    match_pattern_edit->setText(match_pattern);
-
-    size = decimation_pattern.size();
-    decimation_pattern.prepend(decimation_pattern[size - 1]);
-    decimation_pattern.truncate(size);
-    decimation_pattern_edit->setText(decimation_pattern);
-
     const Section *section = project->findSection(current_frame);
 
-    project->setSectionMatchesFromPattern(section->start, match_pattern.toStdString());
-    project->setSectionDecimationFromPattern(section->start, decimation_pattern.toStdString());
+    int size = match_pattern.size();
+    if (size) {
+        match_pattern.prepend(match_pattern[size - 1]);
+        match_pattern.truncate(size);
+        match_pattern_edit->setText(match_pattern);
+
+        project->setSectionMatchesFromPattern(section->start, match_pattern.toStdString());
+    }
+
+    size = decimation_pattern.size();
+    if (size) {
+        decimation_pattern.prepend(decimation_pattern[size - 1]);
+        decimation_pattern.truncate(size);
+        decimation_pattern_edit->setText(decimation_pattern);
+
+        project->setSectionDecimationFromPattern(section->start, decimation_pattern.toStdString());
+    }
+
     commit("Rotate section pattern");
 
     updateSectionOrphanFields(section);
