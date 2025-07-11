@@ -2174,21 +2174,27 @@ void WobblyProject::setRangeMatchesFromPattern(int range_start, int range_end, c
     if (range_start < 0 || range_end >= getNumFrames(PostSource))
         throw WobblyException("Can't apply match pattern to frames [" + std::to_string(range_start) + "," + std::to_string(range_end) + "]: frame numbers out of range.");
 
+    size_t pattern_length = pattern.size();
+    if (pattern_length == 0)
+        throw WobblyException("Can't apply match pattern to frames [" + std::to_string(range_start) + "," + std::to_string(range_end) + "]: empty pattern.");
+
     for (int i = range_start; i <= range_end; i++) {
-        if ((i == 0 && (pattern[i % 5] == 'p' || pattern[i % 5] == 'b')))
+        char match = pattern[i % pattern_length];
+
+        if (i == 0 && (match == 'p' || match == 'b'))
             continue;
 
-        if (i == getNumFrames(PostSource) - 1 && (pattern[i % 5] == 'n' || pattern[i % 5] == 'u')) {
-            if (pattern[i % 5] == 'n')
+        if (i == getNumFrames(PostSource) - 1 && (match == 'n' || match == 'u')) {
+            if (match == 'n')
                 setMatch(i, 'b');
 
             continue;
         }
 
-        if (i == range_end && pattern[i % 5] == 'n')
+        if (i == range_end && match == 'n')
             setMatch(i, 'b');
         else
-            setMatch(i, pattern[i % 5]);
+            setMatch(i, match);
     }
 
     setModified(true);
@@ -2202,8 +2208,13 @@ void WobblyProject::setRangeDecimationFromPattern(int range_start, int range_end
     if (range_start < 0 || range_end >= getNumFrames(PostSource))
         throw WobblyException("Can't apply decimation pattern to frames [" + std::to_string(range_start) + "," + std::to_string(range_end) + "]: frame numbers out of range.");
 
+    size_t pattern_length = pattern.size();
+    if (pattern_length == 0)
+        throw WobblyException("Can't apply decimation pattern to frames [" + std::to_string(range_start) + "," + std::to_string(range_end) + "]: empty pattern.");
+
     for (int i = range_start; i <= range_end; i++) {
-        if (pattern[i % 5] == 'd')
+        char action = pattern[i % pattern_length];
+        if (action == 'd')
             addDecimatedFrame(i);
         else
             deleteDecimatedFrame(i);
