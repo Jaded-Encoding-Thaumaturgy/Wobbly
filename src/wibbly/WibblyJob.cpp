@@ -245,24 +245,20 @@ const char *WibblyJob::getArgsForSourceFilter() const {
 void WibblyJob::sourceToScript(std::string &script) const {
     std::string fixed_input_file = handleSingleQuotes(input_file);
 
-    script += std::format(
-            "if wibbly_last_input_file == r'{0}':\n"
+    script +=
+            "if wibbly_last_input_file == r'" + fixed_input_file + "':\n"
             "    try:\n"
             "        src = vs.get_output(index=1)\n"
             "        if isinstance(src, vs.VideoOutputTuple):\n"
             "            src = src[0]\n"
             "    except KeyError:\n"
-            "        src = c.{1}(r'{0}'{2})\n"
+            "        src = c." + source_filter + "(r'" + fixed_input_file + "'" + getArgsForSourceFilter() + ")\n"
             "        src.set_output(index=1)\n"
             "else:\n"
-            "    src = c.{1}(r'{0}'{2})\n"
+            "    src = c." + source_filter + "(r'" + fixed_input_file + "'" + getArgsForSourceFilter() + ")\n"
             "    src.set_output(index=1)\n"
-            "    wibbly_last_input_file = r'{0}'\n"
-            "\n",
-            fixed_input_file,
-            source_filter,
-            getArgsForSourceFilter()
-    );
+            "    wibbly_last_input_file = r'" + fixed_input_file + "'\n"
+            "\n";
 }
 
 
