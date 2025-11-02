@@ -1,4 +1,4 @@
-AC_INIT([Wobbly], [8], [https://github.com/Jaded-Encoding-Thaumaturgy/Wobbly/issues], [Wobbly], [https://github.com/Jaded-Encoding-Thaumaturgy/Wobbly])
+AC_INIT([Wobbly], [9], [https://github.com/Jaded-Encoding-Thaumaturgy/Wobbly/issues], [Wobbly], [https://github.com/Jaded-Encoding-Thaumaturgy/Wobbly])
 
 : ${CFLAGS=""}
 : ${CXXFLAGS=""}
