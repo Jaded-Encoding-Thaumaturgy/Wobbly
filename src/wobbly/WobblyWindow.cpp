@@ -3257,6 +3257,9 @@ void WobblyWindow::createUI() {
 
 
 void VS_CC messageHandler(int msgType, const char *msg, void *userData) {
+    if (msgType == mtDebug)
+        return;
+
     WobblyWindow *window = (WobblyWindow *)userData;
 
     Qt::ConnectionType type;
@@ -3294,8 +3297,8 @@ void WobblyWindow::vsLogPopup(int msgType, const QString &msg) {
         message += "critical";
     } else if (msgType == mtWarning) {
         message += "warning";
-    } else if (msgType == mtDebug) {
-        message += "debug";
+    } else if (msgType == mtInformation) {
+        message += "information";
     } else {
         message += "unknown";
     }
