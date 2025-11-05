@@ -4143,12 +4143,7 @@ const char *WobblyProject::getArgsForSourceFilter() const {
 
 
 void WobblyProject::sourceToScript(std::string &script, bool save_node) const {
-    std::string src = std::format(
-        "src = c.{}(r'{}'{})\n",
-        source_filter,
-        handleSingleQuotes(input_file),
-        getArgsForSourceFilter()
-    );
+    std::string src = "src = c." + source_filter + "(r'" + handleSingleQuotes(input_file) + "'" + getArgsForSourceFilter() + ")\n";
 
     if (save_node) {
     script +=
