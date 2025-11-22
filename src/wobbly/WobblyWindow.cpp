@@ -3722,9 +3722,8 @@ void WobblyWindow::updateFadesWindow() {
         } else {
             end = it->first;
         }
-        if (it == (fades.cend()--))
-            fades_ranges.push_back({ start, end });
     }
+    fades_ranges.push_back({ start, end });
 
     fades_table->setRowCount(fades_ranges.size());
 
