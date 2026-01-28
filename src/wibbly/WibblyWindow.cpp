@@ -102,6 +102,9 @@ WibblyWindow::WibblyWindow()
 
 
 void VS_CC messageHandler(int msgType, const char *msg, void *userData) {
+    if (msgType == mtDebug)
+        return;
+
     WibblyWindow *window = (WibblyWindow *)userData;
 
     Qt::ConnectionType type;
@@ -132,8 +135,8 @@ void WibblyWindow::vsLogPopup(int msgType, const QString &msg) {
         message += "critical";
     } else if (msgType == mtWarning) {
         message += "warning";
-    } else if (msgType == mtDebug) {
-        message += "debug";
+    } else if (msgType == mtInformation) {
+        message += "information";
     } else {
         message += "unknown";
     }
