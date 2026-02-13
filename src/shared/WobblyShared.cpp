@@ -102,7 +102,7 @@ uint8_t *packRGBFrame(const VSAPI *vsapi, const VSFrame *frame) {
             fd_ptr[0] = ptrB[x];
             fd_ptr[1] = ptrG[x];
             fd_ptr[2] = ptrR[x];
-            fd_ptr[3] = 0;
+            fd_ptr[3] = 255;
             fd_ptr += 4;
         }
         ptrR += stride;
