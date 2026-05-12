@@ -38,7 +38,7 @@ void CombedFramesCollector::start(std::string script, const char *script_name) {
             "if isinstance(src, vs.VideoOutputTuple):\n"
             "    src = src[0]\n"
 
-            "src = c.tdm.IsCombed(src)\n"
+            "src = c.iscombed.IsCombed(src)\n"
 
             "src.set_output()\n";
 

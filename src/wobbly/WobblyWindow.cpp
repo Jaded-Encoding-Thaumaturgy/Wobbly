@@ -2524,7 +2524,7 @@ void WobblyWindow::createCombedFramesWindow() {
     QPushButton *delete_button = new QPushButton(QStringLiteral("Delete"));
 
     QPushButton *refresh_button = new QPushButton(QStringLiteral("Refresh"));
-    refresh_button->setToolTip(QStringLiteral("Run the 'final' script through tdm.IsCombed to see what frames are still combed."));
+    refresh_button->setToolTip(QStringLiteral("Run the 'final' script through iscombed.IsCombed to see what frames are still combed."));
 
 
     connect(combed_view, &TableView::doubleClicked, [this] (const QModelIndex &index) {

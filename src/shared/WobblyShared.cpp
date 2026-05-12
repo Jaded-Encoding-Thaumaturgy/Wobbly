@@ -62,7 +62,7 @@ static PluginDetectionInfo requiredPlugins[] = {
     {"DMetrics", "com.vapoursynth.dmetrics", "DMetrics", nullptr},
     {"SCXVID", "com.nodame.scxvid", "Scxvid", nullptr},
     {"FieldHint", "com.nodame.fieldhint", "FieldHint", nullptr},
-    {"TDeintMod", "com.holywu.tdeintmod", "IsCombed", nullptr},
+    {"IsCombed", "com.holywu.iscombed", "IsCombed", nullptr},
     {"d2vsource", "com.sources.d2vsource", "Source", nullptr},
     {"BestSource", "com.vapoursynth.bestsource", "VideoSource", nullptr},
     {"DGDecNV", "com.vapoursynth.dgdecodenv", "DGSource", nullptr}
